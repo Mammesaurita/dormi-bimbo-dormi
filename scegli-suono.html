@@ -9,10 +9,10 @@
 <body>
     <h1>Scegli il tuo suono</h1>
     <ul>
-        <li><button onclick="alert('Riproduci Aspirapolvere')">Aspirapolvere</button></li>
-        <li><button onclick="alert('Riproduci Camino')">Camino</button></li>
-        <li><button onclick="alert('Riproduci Fusa del Gatto')">Fusa del Gatto</button></li>
-        <li><button onclick="alert('Riproduci Pioggia')">Pioggia</button></li>
+        <li><button onclick="riproduciSuono('aspirapolvere')">Aspirapolvere</button></li>
+        <li><button onclick="riproduciSuono('camino')">Camino</button></li>
+        <li><button onclick="riproduciSuono('fusa-gatto')">Fusa del Gatto</button></li>
+        <li><button onclick="riproduciSuono('pioggia')">Pioggia</button></li>
     </ul>
     <h2>Gestione del volume</h2>
     <table>
@@ -30,5 +30,21 @@
         </tr>
     </table>
     <button onclick="alert('Riproduzione avviata')">Riproduci</button>
+
+    <script>
+        // Oggetto con le sorgenti dei suoni
+        const suoni = {
+            'aspirapolvere': 'aspirapolvere.mp3',
+            'camino': 'camino.mp3',
+            'fusa-gatto': 'fusa-gatto.mp3',
+            'pioggia': 'pioggia.mp3'
+        };
+
+        // Funzione per riprodurre un suono
+        function riproduciSuono(suono) {
+            const audio = new Audio(suoni[suono]);
+            audio.play();
+        }
+    </script>
 </body>
 </html>

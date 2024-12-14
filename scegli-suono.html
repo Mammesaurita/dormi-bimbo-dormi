@@ -14,6 +14,7 @@
         <li><button onclick="riproduciSuono('fusa-gatto')">Fusa del Gatto</button></li>
         <li><button onclick="riproduciSuono('pioggia')">Pioggia</button></li>
     </ul>
+
     <h2>Gestione del volume</h2>
     <table>
         <tr>
@@ -21,15 +22,13 @@
             <th>Tempo (s)</th>
         </tr>
         <tr>
-            <td><input type="number" placeholder="10"></td>
-            <td><input type="number" placeholder="30"></td>
-        </tr>
-        <tr>
-            <td><input type="number" placeholder="20"></td>
-            <td><input type="number" placeholder="60"></td>
+            <td><input type="number" id="percentuale" placeholder="10"></td>
+            <td><input type="number" id="tempo" placeholder="30"></td>
         </tr>
     </table>
-    <button onclick="alert('Riproduzione avviata')">Riproduci</button>
+
+    <button onclick="avviaRiproduzione()">Riproduci</button>
+    <button onclick="stopRiproduzione()">Stop</button>
 
     <script>
         // Oggetto con le sorgenti dei suoni
@@ -40,10 +39,45 @@
             'pioggia': 'pioggia.mp3'
         };
 
+        let audio = null; // Audio corrente
+        let timer = null; // Timer per la durata
+
         // Funzione per riprodurre un suono
         function riproduciSuono(suono) {
-            const audio = new Audio(suoni[suono]);
+            if (audio) {
+                audio.pause(); // Ferma l'audio se è già in riproduzione
+            }
+
+            audio = new Audio(suoni[suono]);
+            audio.loop = true; // Impostiamo il suono in loop
             audio.play();
+        }
+
+        // Funzione per avviare la riproduzione con la durata
+        function avviaRiproduzione() {
+            const tempo = parseInt(document.getElementById('tempo').value);
+            const percentuale = parseInt(document.getElementById('percentuale').value);
+
+            if (isNaN(tempo) || tempo <= 0) {
+                alert("Per favore, inserisci un tempo di riproduzione valido!");
+                return;
+            }
+
+            // Scegliamo un suono da riprodurre (default "aspirapolvere")
+            riproduciSuono('aspirapolvere');
+
+            // Durata totale di riproduzione
+            setTimeout(() => {
+                stopRiproduzione(); // Ferma la riproduzione quando il tempo è scaduto
+            }, tempo * 1000); // Tempo in millisecondi
+        }
+
+        // Funzione per fermare la riproduzione
+        function stopRiproduzione() {
+            if (audio) {
+                audio.pause(); // Ferma l'audio
+                audio.currentTime = 0; // Resetta la posizione del suono
+            }
         }
     </script>
 </body>

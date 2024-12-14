@@ -18,3 +18,34 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+input {
+    width: 80%;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+h1, h2 {
+    color: #007BFF;
+}

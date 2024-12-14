@@ -9,10 +9,10 @@
 <body>
     <h1>Scegli il tuo suono</h1>
     <ul>
-        <li><button onclick="riproduciSuono('aspirapolvere')">Aspirapolvere</button></li>
-        <li><button onclick="riproduciSuono('camino')">Camino</button></li>
-        <li><button onclick="riproduciSuono('fusa-gatto')">Fusa del Gatto</button></li>
-        <li><button onclick="riproduciSuono('pioggia')">Pioggia</button></li>
+        <li><button onclick="selezionaSuono('aspirapolvere')">Aspirapolvere</button></li>
+        <li><button onclick="selezionaSuono('camino')">Camino</button></li>
+        <li><button onclick="selezionaSuono('fusa-gatto')">Fusa del Gatto</button></li>
+        <li><button onclick="selezionaSuono('pioggia')">Pioggia</button></li>
     </ul>
 
     <h2>Gestione del volume</h2>
@@ -40,7 +40,38 @@
         };
 
         let audio = null; // Audio corrente
+        let suonoSelezionato = ''; // Suono selezionato
         let timer = null; // Timer per la durata
+
+        // Funzione per selezionare un suono senza avviare la riproduzione
+        function selezionaSuono(suono) {
+            suonoSelezionato = suono;
+            alert(`Hai selezionato il suono: ${suono}`);
+        }
+
+        // Funzione per avviare la riproduzione con la durata
+        function avviaRiproduzione() {
+            const tempo = parseInt(document.getElementById('tempo').value);
+            const percentuale = parseInt(document.getElementById('percentuale').value);
+
+            if (!suonoSelezionato) {
+                alert("Per favore, seleziona prima un suono.");
+                return;
+            }
+
+            if (isNaN(tempo) || tempo <= 0) {
+                alert("Per favore, inserisci un tempo di riproduzione valido!");
+                return;
+            }
+
+            // Riproduci il suono selezionato
+            riproduciSuono(suonoSelezionato);
+
+            // Durata totale di riproduzione
+            setTimeout(() => {
+                stopRiproduzione(); // Ferma la riproduzione quando il tempo è scaduto
+            }, tempo * 1000); // Tempo in millisecondi
+        }
 
         // Funzione per riprodurre un suono
         function riproduciSuono(suono) {
@@ -51,25 +82,6 @@
             audio = new Audio(suoni[suono]);
             audio.loop = true; // Impostiamo il suono in loop
             audio.play();
-        }
-
-        // Funzione per avviare la riproduzione con la durata
-        function avviaRiproduzione() {
-            const tempo = parseInt(document.getElementById('tempo').value);
-            const percentuale = parseInt(document.getElementById('percentuale').value);
-
-            if (isNaN(tempo) || tempo <= 0) {
-                alert("Per favore, inserisci un tempo di riproduzione valido!");
-                return;
-            }
-
-            // Scegliamo un suono da riprodurre (default "aspirapolvere")
-            riproduciSuono('aspirapolvere');
-
-            // Durata totale di riproduzione
-            setTimeout(() => {
-                stopRiproduzione(); // Ferma la riproduzione quando il tempo è scaduto
-            }, tempo * 1000); // Tempo in millisecondi
         }
 
         // Funzione per fermare la riproduzione

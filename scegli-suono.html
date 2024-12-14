@@ -45,19 +45,19 @@
 
         // Funzione per selezionare un suono senza avviare la riproduzione
         function selezionaSuono(suono) {
-            suonoSelezionato = suono;
+            suonoSelezionato = suono; // Salviamo il suono selezionato
             alert(`Hai selezionato il suono: ${suono}`);
         }
 
         // Funzione per avviare la riproduzione con la durata
         function avviaRiproduzione() {
-            const tempo = parseInt(document.getElementById('tempo').value);
-            const percentuale = parseInt(document.getElementById('percentuale').value);
-
             if (!suonoSelezionato) {
                 alert("Per favore, seleziona prima un suono.");
                 return;
             }
+
+            const tempo = parseInt(document.getElementById('tempo').value);
+            const percentuale = parseInt(document.getElementById('percentuale').value);
 
             if (isNaN(tempo) || tempo <= 0) {
                 alert("Per favore, inserisci un tempo di riproduzione valido!");
